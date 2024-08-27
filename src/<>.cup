@@ -66,8 +66,7 @@ atribuicao_de_variavel ::= expressao_aritmetica SEMI STRING final_linha {: Syste
         | STRING SEMI STRING  final_linha {: System.out.println("Atribuicao de variavel"); :}
         ;
 
-expressao_aritmetica ::= expressao_simples:n {: RESULT = n; System.out.println("Expressao simples"); :}
-        | expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = (e1 + e2); :} 
+expressao_aritmetica ::= expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = (e1 + e2); :} 
 	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = (e1 - e2); :} 
 	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = (e1 * e2); :} 
 	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); :} 
