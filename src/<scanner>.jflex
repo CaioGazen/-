@@ -48,8 +48,8 @@ String = [^\t\f\r\n " +"]+ | \"[^(\\n|\\r)]~\"
   "scanf"                     { return symbol(sym.SCAN);    }
   [!]+                        { return symbol(sym.EOL);     }
   [?]+                        { return symbol(sym.EOLD);    } 
-  {Number}                    { return symbol(sym.NUMBER, new Integer(yytext())); }
+  {Number}                    { return symbol(sym.NUMBER, new Double(yytext())); }
   {WhiteSpace}                { /* ignore */ }
-  {String}                    { return symbol(sym.STRING), new String(yytext())}
+  {String}                    { return symbol(sym.STRING, new String(yytext()));  }
   . { return symbol(sym.error, yytext()); }
 }

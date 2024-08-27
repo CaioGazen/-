@@ -15,9 +15,9 @@ terminal String STRING;
 
 
 /* Nao terminais */
-non terminal            bloco_função, bloco_comandos, comandos;
-non terminal            comando_printf, comando_scanf, comando_iff, comando_for, comando_while, declaracao_de_variavel, atribuicao_de_variavel, expressao_aritmetica, expressao_booleana, expressao_simples, sinal, tipo, final_linha;
-
+non terminal            bloco_função, bloco_comandos, comandos, comando;
+non terminal            comando_printf, comando_scanf, comando_iff, comando_for, comando_while, declaracao_de_variavel, atribuicao_de_variavel,  expressao_booleana, tipo, final_linha;
+non terminal Double     expressao_aritmetica;
 
 /* Precedencias */
 precedence left ADD, SUB;
@@ -31,8 +31,9 @@ bloco_função ::= bloco_comandos STRING:s {: System.out.println("Declaração "
 
 bloco_comandos ::= RB comandos LB;
 
-comandos ::= comandos comandos
-        | comando_printf
+comandos ::= comandos comando | comando;
+
+comando ::= comando_printf
         | comando_scanf
         | comando_iff
         | comando_for
@@ -65,31 +66,28 @@ atribuicao_de_variavel ::= expressao_aritmetica SEMI STRING final_linha {: Syste
         | STRING SEMI STRING  final_linha {: System.out.println("Atribuicao de variavel"); :}
         ;
 
-expressao_aritmetica ::= expressao_simples {: System.out.println("Expressao simples"); :}
-        | expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() + e2.intValue()); :} 
-	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() - e2.intValue()); :} 
-	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() * e2.intValue()); :} 
-	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() / e2.intValue()); :} 
-	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() % e2.intValue()); :} 
-	      | RP expressao_aritmetica:e LP                            {: RESULT = e; :}
+expressao_aritmetica ::= expressao_simples:n {: RESULT = n; System.out.println("Expressao simples"); :}
+        | expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = (e1 + e2); :} 
+	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = (e1 - e2); :} 
+	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = (e1 * e2); :} 
+	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); :} 
+	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = (e1 % e2); :} 
+	      | RP expressao_aritmetica:e LP                            {: RESULT = e;         :}
+        | NUMBER:n                                                {: RESULT = n; :}
 	      | error                                                   {: System.out.println("Erro de sintaxe na expressao!"); :}
 	      ;
 
 /*expressao_booleana ::= expressao_simples {: System.out.println("Expressao Booleana"); :}
         | expressao_aritmetica operador_relacional expressao_aritmetica {: System.out.println("Expressao Booleana"); :} 
         ;
+
+expressao_simples ::= NUMBER:n {: RESULT = n; :};
 */
-expressao_simples ::= sinal NUMBER
-        | sinal STRING
-        ;
 
 final_linha::= EOL
         | EOLD
         ;
 
-sinal ::= ADD
-        | SUB
-        ;
 
 tipo ::= NB
         | NB NB
