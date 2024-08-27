@@ -1,0 +1,101 @@
+import java_cup.runtime.*;
+
+parser code {:
+
+public void syntax_error(java_cup.runtime.Symbol currToken) {
+      System.out.println("Erro de sintaxe na linha: "+(currToken.left+1));
+}
+
+:};
+
+/* Terminais (tokens retornados pelo analisador lexico) */
+terminal        ADD, SUB, MTP, DIV, MOD, LP, RP, SEMI, LB, RB, IFF, PRNT, FOR, WHILE, ELSE, SCAN, EOL, EOLD, EQ, NEQ, LT, LTE, GTE, GT, NB, CH;
+terminal Double NUMBER;
+terminal String STRING;
+
+
+/* Nao terminais */
+non terminal            bloco_função, bloco_comandos, comandos;
+non terminal            comando_printf, comando_scanf, comando_iff, comando_for, comando_while, declaracao_de_variavel, atribuicao_de_variavel, expressao_aritmetica, expressao_booleana, expressao_simples, sinal, tipo, final_linha;
+
+
+/* Precedencias */
+precedence left ADD, SUB;
+precedence left MTP, DIV, MOD;
+precedence left RP;
+
+
+/* Regras de producao da gramatica */
+
+bloco_função ::= bloco_comandos STRING:s {: System.out.println("Declaração " + s + "de função detectada"); :};
+
+bloco_comandos ::= RB comandos LB;
+
+comandos ::= comandos comandos
+        | comando_printf
+        | comando_scanf
+        | comando_iff
+        | comando_for
+        | comando_while
+        | declaracao_de_variavel
+        | atribuicao_de_variavel
+        ;
+
+comando_printf ::= RP STRING:s LP PRNT final_linha {: System.out.println("Chamada da Função printf detectada: "+ s); :};
+
+comando_scanf ::= RP LP SCAN  final_linha {: System.out.println("Chamada da Função scanf detectada"); :};
+
+
+comando_iff ::= RP  expressao_booleana  LP IFF  final_linha bloco_comandos {: System.out.println("Chamada da Função iff detectada"); :}
+        | RP  expressao_booleana  LP IFF  final_linha bloco_comandos ELSE  final_linha bloco_comandos {: System.out.println("Chamada da Função iff detectada"); :}
+        ;
+
+comando_for ::= RP declaracao_de_variavel  final_linha  expressao_booleana   final_linha  atribuicao_de_variavel  final_linha LP FOR bloco_comandos {: System.out.println("Chamada da Função for detectada"); :}
+        | RP expressao_booleana final_linha atribuicao_de_variavel final_linha LP FOR bloco_comandos {: System.out.println("Chamada da Função for detectada"); :}
+        ;
+
+comando_while ::= RP  expressao_booleana  LP WHILE   final_linha bloco_comandos {: System.out.println("Chamada da Função while detectada"); :};
+
+declaracao_de_variavel ::=  expressao_aritmetica SEMI STRING tipo  final_linha {: System.out.println("Declaração de variavel"); :}
+        | STRING tipo  final_linha {: System.out.println("Declaração de variavel"); :}
+        | STRING SEMI STRING tipo  final_linha {: System.out.println("Declaração de variavel"); :}
+        ;
+
+atribuicao_de_variavel ::= expressao_aritmetica SEMI STRING final_linha {: System.out.println("Atribuicao de variavel"); :}
+        | STRING SEMI STRING  final_linha {: System.out.println("Atribuicao de variavel"); :}
+        ;
+
+expressao_aritmetica ::= expressao_simples {: System.out.println("Expressao simples"); :}
+        | expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() + e2.intValue()); :} 
+	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() - e2.intValue()); :} 
+	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() * e2.intValue()); :} 
+	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() / e2.intValue()); :} 
+	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = new Integer(e1.intValue() % e2.intValue()); :} 
+	      | RP expressao_aritmetica:e LP                            {: RESULT = e; :}
+	      | error                                                   {: System.out.println("Erro de sintaxe na expressao!"); :}
+	      ;
+
+/*expressao_booleana ::= expressao_simples {: System.out.println("Expressao Booleana"); :}
+        | expressao_aritmetica operador_relacional expressao_aritmetica {: System.out.println("Expressao Booleana"); :} 
+        ;
+*/
+expressao_simples ::= sinal NUMBER
+        | sinal STRING
+        ;
+
+final_linha::= EOL
+        | EOLD
+        ;
+
+sinal ::= ADD
+        | SUB
+        ;
+
+tipo ::= NB
+        | NB NB
+        | CH
+        | CH CH
+        ;
+
+
+
