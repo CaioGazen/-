@@ -1,9 +1,7 @@
 }
-  ) "hello" (printf !!!!
-  )1 > 2( if !!! }
-      0 ; f  a numero!
+  ) "hello" "hhp" ( printf !!!!
+  ) -1 > +2 ( iff !! }
+      ) dentro do if ( printf ? 
     {
 {
 main
-
-

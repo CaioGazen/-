@@ -7,8 +7,12 @@ import java_cup.runtime.Symbol;
 %cup
 %line
 %column
+%debug
 
 %{
+  private static String zzToPrintable(CharSequence cs) {
+    return zzToPrintable(cs.toString());
+  }
   private Symbol symbol(int type) {
   return new Symbol(type, yyline, yycolumn);
   }
@@ -18,7 +22,7 @@ import java_cup.runtime.Symbol;
 %}
 
 WhiteSpace = [ \t\f\r\n]
-Number = [:digit:]+ | [:digit:]+[\.][:digit:]* | \.[:digit:]+
+Number = [-|+]?[:digit:]+ | [-|+]?[:digit:]+[\.][:digit:]* | [-|+]?\.[:digit:]+
 String = [^\t\f\r\n " +"]+ | \"[^(\\n|\\r)]~\"
 
 
@@ -29,8 +33,8 @@ String = [^\t\f\r\n " +"]+ | \"[^(\\n|\\r)]~\"
   "*"                         { return symbol(sym.MTP);     }
   "/"                         { return symbol(sym.DIV);     }
   "%"                         { return symbol(sym.MOD);     }
-  "("                         { return symbol(sym.LP);      }
-  ")"                         { return symbol(sym.RP);      }
+  [(]                         { return symbol(sym.LP);      }
+  [)]                         { return symbol(sym.RP);      }
   ";"                         { return symbol(sym.SEMI);    }
   "{"                         { return symbol(sym.LB);      }
   "}"                         { return symbol(sym.RB);      }
@@ -48,8 +52,8 @@ String = [^\t\f\r\n " +"]+ | \"[^(\\n|\\r)]~\"
   "scanf"                     { return symbol(sym.SCAN);    }
   [!]+                        { return symbol(sym.EOL);     }
   [?]+                        { return symbol(sym.EOLD);    } 
-  {Number}                    { return symbol(sym.NUMBER, new Double(yytext())); }
-  {WhiteSpace}                { /* ignore */ }
+  {Number}                    { return symbol(sym.NUMBER, Double.valueOf(yytext())); }
+  {WhiteSpace}                { }
   {String}                    { return symbol(sym.STRING, new String(yytext()));  }
   . { return symbol(sym.error, yytext()); }
 }
