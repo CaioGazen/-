@@ -69,21 +69,21 @@ atribuicao_de_variavel ::= expressao_aritmetica SEMI bloco_string final_linha {:
         ;
 
 expressao_aritmetica ::= expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = (e1 + e2); :} 
-	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = (e1 - e2); :} 
-	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = (e1 * e2); :} 
-	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); :} 
-	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = (e1 % e2); :} 
-	      | RP expressao_aritmetica:e LP                            {: RESULT = e;         :}
-        | NUMBER:n                                                {: RESULT = n; :}
+	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = (e1 - e2); System.out.println("Subtracao detectada: " + e1 + " - " + e2); :} 
+	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = (e1 * e2); System.out.println("Subtracao detectada: " + e1 + " * " + e2);:} 
+	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); System.out.println("Subtracao detectada: " + e1 + " / " + e2);:} 
+	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = (e1 % e2); System.out.println("Subtracao detectada: " + e1 + " % " + e2);:} 
+	      | RP expressao_aritmetica:e LP                            {: RESULT = e;         System.out.println("Espressao aritmetica entre parenteses detectada: " + e);:}
+        | NUMBER:n                                                {: RESULT = n; System.out.println("Numero detectado");:}
 	      | error                                                   {: System.out.println("Erro de sintaxe na expressao!"); :}
 	      ;
 
 expressao_booleana ::= expressao_aritmetica:e1 EQ expressao_aritmetica:e2      {: RESULT = (e1 == e2); :}
-        | expressao_aritmetica:e1 NEQ expressao_aritmetica:e2     {: RESULT = (e1 != e2); :}
-        | expressao_aritmetica:e1 LT expressao_aritmetica:e2      {: RESULT = (e1 < e2); :}
-        | expressao_aritmetica:e1 LTE expressao_aritmetica:e2     {: RESULT = (e1 <= e2); :}
-        | expressao_aritmetica:e1 GTE expressao_aritmetica:e2     {: RESULT = (e1 >= e2); :}
-        | expressao_aritmetica:e1 GT expressao_aritmetica:e2      {: RESULT = (e1 > e2); :}
+        | expressao_aritmetica:e1 NEQ expressao_aritmetica:e2     {: RESULT = (e1 != e2); System.out.println("Chamada da Função while detectada");:}
+        | expressao_aritmetica:e1 LT expressao_aritmetica:e2      {: RESULT = (e1 < e2); System.out.println("Chamada da Função while detectada");:}
+        | expressao_aritmetica:e1 LTE expressao_aritmetica:e2     {: RESULT = (e1 <= e2); System.out.println("Chamada da Função while detectada");:}
+        | expressao_aritmetica:e1 GTE expressao_aritmetica:e2     {: RESULT = (e1 >= e2); System.out.println("Chamada da Função while detectada");:}
+        | expressao_aritmetica:e1 GT expressao_aritmetica:e2      {: RESULT = (e1 > e2); System.out.println("Chamada da Função while detectada");:}
         ;
 
 
