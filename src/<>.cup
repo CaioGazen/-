@@ -70,9 +70,9 @@ atribuicao_de_variavel ::= expressao_aritmetica SEMI bloco_string final_linha {:
 
 expressao_aritmetica ::= expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = (e1 + e2); :} 
 	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = (e1 - e2); System.out.println("Subtracao detectada: " + e1 + " - " + e2); :} 
-	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = (e1 * e2); System.out.println("Subtracao detectada: " + e1 + " * " + e2);:} 
-	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); System.out.println("Subtracao detectada: " + e1 + " / " + e2);:} 
-	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = (e1 % e2); System.out.println("Subtracao detectada: " + e1 + " % " + e2);:} 
+	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = (e1 * e2); System.out.println("Subtracao detectada: " + e1 + " * " + e2); :} 
+	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); System.out.println("Subtracao detectada: " + e1 + " / " + e2); :} 
+	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = (e1 % e2); System.out.println("Subtracao detectada: " + e1 + " % " + e2); :} 
 	      | RP expressao_aritmetica:e LP                            {: RESULT = e;         System.out.println("Espressao aritmetica entre parenteses detectada: " + e);:}
         | NUMBER:n                                                {: RESULT = n; System.out.println("Numero detectado");:}
 	      | error                                                   {: System.out.println("Erro de sintaxe na expressao!"); :}
