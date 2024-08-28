@@ -47,8 +47,8 @@ comando_printf ::= RP bloco_string:s LP PRNT final_linha {: System.out.println("
 comando_scanf ::= RP LP SCAN  final_linha {: System.out.println("Chamada da Função scanf detectada"); :};
 
 
-comando_iff ::= RP  expressao_booleana  LP IFF  final_linha bloco_comandos {: System.out.println("Chamada da Função iff detectada"); :}
-        | RP  expressao_booleana  LP IFF  final_linha bloco_comandos ELSE  final_linha bloco_comandos {: System.out.println("Chamada da Função iff detectada"); :}
+comando_iff ::= RP  expressao_booleana:b  LP IFF  final_linha bloco_comandos {: System.out.println("Chamada da Função iff detectada com expreessao: " + b); :}
+        | RP  expressao_booleana:b  LP IFF  final_linha bloco_comandos ELSE  final_linha bloco_comandos {: System.out.println("Chamada da Função iff else detectada com expressao: " + b); :}
 	      | error                                                   {: System.out.println("Erro de sintaxe no comando iff!"); :}
         ; 
 

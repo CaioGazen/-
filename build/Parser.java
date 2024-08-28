@@ -433,7 +433,10 @@ class CUP$Parser$actions {
           case 14: // comando_iff ::= RP expressao_booleana LP IFF final_linha bloco_comandos 
             {
               Object RESULT =null;
-		 System.out.println("Chamada da Função iff detectada"); 
+		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		 System.out.println("Chamada da Função iff detectada com expreessao: " + b); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("comando_iff",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -442,7 +445,10 @@ class CUP$Parser$actions {
           case 15: // comando_iff ::= RP expressao_booleana LP IFF final_linha bloco_comandos ELSE final_linha bloco_comandos 
             {
               Object RESULT =null;
-		 System.out.println("Chamada da Função iff detectada"); 
+		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-7)).value;
+		 System.out.println("Chamada da Função iff else detectada com expressao: " + b); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("comando_iff",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
