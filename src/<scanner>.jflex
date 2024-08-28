@@ -7,7 +7,7 @@ import java_cup.runtime.Symbol;
 %cup
 %line
 %column
-%debug
+
 
 %{
   private static String zzToPrintable(CharSequence cs) {

@@ -59,23 +59,23 @@ comando_for ::= RP declaracao_de_variavel  final_linha  expressao_booleana   fin
 
 comando_while ::= RP  expressao_booleana  LP WHILE   final_linha bloco_comandos {: System.out.println("Chamada da Função while detectada"); :};
 
-declaracao_de_variavel ::=  expressao_aritmetica SEMI bloco_string tipo  final_linha {: System.out.println("Declaração de variavel"); :}
-        | bloco_string tipo  final_linha {: System.out.println("Declaração de variavel"); :}
-        | bloco_string SEMI bloco_string tipo  final_linha {: System.out.println("Declaração de variavel"); :}
+declaracao_de_variavel ::=  expressao_aritmetica:a SEMI bloco_string:s tipo:t  final_linha {: System.out.println("Declaração da variavel: " + s +" com valor: " + a + " e tipo: "+ t); :}
+        | bloco_string:s tipo:t  final_linha {: System.out.println("Declaração da variavel: " + s + "do tipo: "+ t); :}
+        | bloco_string:s1 SEMI bloco_string:s2 tipo:t  final_linha {: System.out.println("Declaração da variavel: " + s1 + " do tipo: "+ t + "Recebe o valor de: " + s2); :}
         ;
 
-atribuicao_de_variavel ::= expressao_aritmetica SEMI bloco_string final_linha {: System.out.println("Atribuicao de variavel"); :}
-        | bloco_string SEMI bloco_string final_linha {: System.out.println("Atribuicao de variavel"); :}
+atribuicao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s final_linha {: System.out.println("A variavel "+ s +"Recebe o valor: " + a); :}
+        | bloco_string:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s1 +"Recebe o da variavel: " + s2); :}
         ;
 
 expressao_aritmetica ::= expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = (e1 + e2); :} 
-	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = (e1 - e2); System.out.println("Subtracao detectada: " + e1 + " - " + e2); :} 
-	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = (e1 * e2); System.out.println("Subtracao detectada: " + e1 + " * " + e2); :} 
-	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); System.out.println("Subtracao detectada: " + e1 + " / " + e2); :} 
-	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = (e1 % e2); System.out.println("Subtracao detectada: " + e1 + " % " + e2); :} 
+	      | expressao_aritmetica:e1 SUB expressao_aritmetica:e2     {: RESULT = (e1 - e2); System.out.println("Subtracao detectada: " + e1 + " - " + e2); :}
+	      | expressao_aritmetica:e1 MTP expressao_aritmetica:e2     {: RESULT = (e1 * e2); System.out.println("Subtracao detectada: " + e1 + " * " + e2); :}
+	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); System.out.println("Subtracao detectada: " + e1 + " / " + e2); :}
+	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = (e1 % e2); System.out.println("Subtracao detectada: " + e1 + " % " + e2); :}
 	      | RP expressao_aritmetica:e LP                            {: RESULT = e;         System.out.println("Espressao aritmetica entre parenteses detectada: " + e);:}
-        | NUMBER:n                                                {: RESULT = n; System.out.println("Expressao aritmetica detectada "); :}
-	      | error                                                   {: System.out.println("Erro de sintaxe na expressao!"); :}
+        | NUMBER:n                                                {: RESULT = n; :}
+	      | error                                                   {: System.out.println("Erro de sintaxe na expressao aritmetica!"); :}
 	      ;
 
 expressao_booleana ::= expressao_aritmetica:e1 EQ expressao_aritmetica:e2      {: RESULT = (e1 == e2); :}
@@ -95,10 +95,10 @@ bloco_string ::= bloco_string:s1 STRING:s2   {: RESULT = s1 + " " +s2; :}
         | STRING:s    {: RESULT = s; :}
         ;
 
-tipo ::= NB
-        | NB NB
-        | CH
-        | CH CH
+tipo ::= NB   {: RESULT = "number"; :}
+        | NB NB   {: RESULT = "number number"; :} 
+        | CH      {: RESULT = "char"; :}
+        | CH CH   {: RESULT = "char char"; :}
         ;
 
 
