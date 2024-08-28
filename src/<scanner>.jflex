@@ -50,6 +50,8 @@ String = [^\t\f\r\n " +"]+ | \"[^(\\n|\\r)]~\"
   "while"                     { return symbol(sym.WHILE);   }
   "else"                      { return symbol(sym.ELSE);    }
   "scanf"                     { return symbol(sym.SCAN);    }
+  "number"                    { return symbol(sym.NB);      }
+  "char"                      { return symbol(sym.CH);      }
   [!]+                        { return symbol(sym.EOL);     }
   [?]+                        { return symbol(sym.EOLD);    } 
   {Number}                    { return symbol(sym.NUMBER, Double.valueOf(yytext())); }

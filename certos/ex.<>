@@ -2,7 +2,8 @@
   ) "hello" "hhp" ( printf !!!!
   ) -1 > ) 2 - 3 ( ( iff !! }
       ) dentro do if ( printf ?
-      9 ; nome da variavel number
+      9 ; var number ?
+      var + 1 ; var !
     {
 {
 main

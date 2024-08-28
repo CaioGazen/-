@@ -17,7 +17,7 @@ terminal String STRING;
 /* Nao terminais */
 non terminal            bloco_função, bloco_string, bloco_comandos, comandos, comando;
 non terminal            comando_printf, comando_scanf, comando_iff, comando_for, comando_while, declaracao_de_variavel, atribuicao_de_variavel,  expressao_booleana, tipo, final_linha;
-non terminal Double     expressao_aritmetica;
+non terminal            expressao_aritmetica;
 
 /* Precedencias */
 precedence left ADD, SUB;
@@ -65,7 +65,7 @@ declaracao_de_variavel ::=  expressao_aritmetica:a SEMI bloco_string:s tipo:t  f
         ;
 
 atribuicao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s final_linha {: System.out.println("A variavel "+ s +" Recebe o valor: " + a); :}
-        | bloco_string:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s1 +"Recebe o da variavel: " + s2); :}
+        | bloco_string:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s1 +" Recebe o valor da variavel: " + s2); :}
         ;
 
 expressao_aritmetica ::= expressao_aritmetica:e1 ADD expressao_aritmetica:e2     {: RESULT = (e1 + e2); :} 
@@ -74,6 +74,7 @@ expressao_aritmetica ::= expressao_aritmetica:e1 ADD expressao_aritmetica:e2    
 	      | expressao_aritmetica:e1 DIV expressao_aritmetica:e2     {: RESULT = (e1 / e2); System.out.println("Divisao detectada: ) " + e1 + " / " + e2 + " ( \t\tResultado: "+ RESULT); :}
 	      | expressao_aritmetica:e1 MOD expressao_aritmetica:e2     {: RESULT = (e1 % e2); System.out.println("Operacao de Modulo detectada: ) " + e1 + " % " + e2 + " ( \t\tResultado: "+ RESULT); :}
 	      | RP expressao_aritmetica:e LP                            {: RESULT = e;         System.out.println("Espressao aritmetica detectada: " + e);:}
+        | bloco_string:s                                          {: RESULT = s; :}
         | NUMBER:n                                                {: RESULT = n; :}
 	      | error                                                   {: System.out.println("Erro de sintaxe na expressao aritmetica!"); :}
 	      ;
