@@ -27,7 +27,7 @@ precedence left RP;
 
 /* Regras de producao da gramatica */
 
-bloco_função ::= bloco_comandos bloco_string:s {: System.out.println("Declaração " + s + "de função detectada"); :};
+bloco_função ::= bloco_comandos bloco_string:s {: System.out.println("Declaração " + s + " de função detectada"); :};
 
 bloco_comandos ::= RB comandos LB;
 
