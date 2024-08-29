@@ -1,5 +1,6 @@
 # Notação BNF
-**bloco-fun%C3%A7%C3%A3o:**
+
+**bloco-fun%C3%A7%C3%A3o**
 
 ![bloco-fun%C3%A7%C3%A3o](diagram/bloco-fun%C3%A7%C3%A3o.png)
 
