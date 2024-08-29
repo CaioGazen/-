@@ -1,15 +1,15 @@
 # Notação EBNF
 
-<span style="color:blue">
-[Arquivo com a notação EBNF](\<\>.ebnf)
-</span>
+
+[Arquivo com a notação EBNF]("\<\>.ebnf")
+
 
 # Diagramas Da Notação EBNF
 
 **bloco-função**
-<span style="color:blue">
+
 ![bloco-função](diagram/bloco-func.png)
-</span>
+
 ```
 bloco-função
          ::= bloco-comandos ( '}' args '{' )? string
