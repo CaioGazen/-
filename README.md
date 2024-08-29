@@ -1,5 +1,9 @@
-# Notação BNF
+# Notação EBNF
 
+![Arquivo com a notação EBNF](\<\>.ebnf)
+
+##
+# Diagramas Da Notação EBNF
 **bloco-função**
 
 ![bloco-função](diagram/bloco-func.png)
