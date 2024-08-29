@@ -3,8 +3,8 @@
 
 
 
-\<bloco função\> ::= \<bloco comandos\> \<string\>
-\<bloco comandos\> ::= \<inicio bloco\> \<comandos\> \<fim bloco\> 
+\<bloco função\> ::= \<bloco comandos\> \<string\> \r
+\<bloco comandos\> ::= \<inicio bloco\> \<comandos\> \<fim bloco\> \r
 \<inicio bloco\> ::= }
 \<fim bloco\> ::= {
 \<comandos\> ::= \<comandos\> \<comandos\>| \<comando printf\> | \<comando scanf\> | \<comando iff\> | \<comando else\> | \<comando for\> | \<comando while\> | \<declaracao de variavel\> | \<atribuicao de variavel\>
