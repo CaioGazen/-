@@ -34,7 +34,9 @@ args ::= args declaracao_de_variavel
         | declaracao_de_variavel
         ;
 
-bloco_comandos ::= RB comandos LB;
+bloco_comandos ::= RB comandos LB
+        | error     {: System.out.println("Erro de sintaxe no bloco de comando, provavel falta de uma chave"); :}
+        ;
 
 comandos ::= comandos comando | comando;
 
@@ -54,8 +56,7 @@ comando_scanf ::= RP LP SCAN final_linha {: System.out.println("Chamada da Funç
 
 comando_iff ::= RP expressao_booleana:b LP IFF final_linha bloco_comandos {: System.out.println("Chamada da Função iff detectada com expreessao: " + b); :}
         | RP expressao_booleana:b LP IFF final_linha bloco_comandos ELSE final_linha bloco_comandos {: System.out.println("Chamada da Função iff else detectada com expressao: " + b); :}
-	      | error                                                   {: System.out.println("Erro de sintaxe no comando iff!"); :}
-        ; 
+        ;
 
 
 comando_for ::= RP declaracao_de_variavel expressao_booleana final_linha atribuicao_de_variavel LP FOR final_linha bloco_comandos {: System.out.println("Chamada da Função for detectada"); :}
@@ -70,7 +71,9 @@ declaracao_de_variavel ::=  expressao_aritmetica:a SEMI bloco_string:s tipo:t  f
         ;
 
 atribuicao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s final_linha {: System.out.println("A variavel "+ s +" Recebe o valor: " + a); :}
-        | bloco_string:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s1 +" Recebe o valor da variavel: " + s2); :}
+        | bloco_string:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s2 +" Recebe o valor da variavel: " + s1); :}
+        | comando_scanf:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s2 +" Recebe o valor: " + s1); :}
+        | error                                                                                   {: System.out.println("Erro de sintaxe na atribuicao de variavel!"); :}
         ;
 
 expressao_aritmetica ::= expressao_aritmetica:e1 operador_aritimetico:op expressao_aritmetica:e2    {: RESULT = e1 + " " + op + " " + e2; System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
@@ -93,7 +96,8 @@ expressao_booleana ::= expressao_aritmetica:e1 operador_booleano:op expressao_ar
         | bloco_string:e1 operador_booleano:op expressao_aritmetica:e2                            {: RESULT = e1 + " " + op + " " + e2; System.out.println("Expressao booleana ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
         | bloco_string:e1 operador_booleano:op bloco_string:e2                                    {: RESULT = e1 + " " + op + " " + e2; System.out.println("Expressao booleana ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
         | expressao_aritmetica:e1 operador_booleano:op bloco_string:e2                            {: RESULT = e1 + " " + op + " " + e2; System.out.println("Expressao booleana ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
-        ;
+	      ;
+
 
 operador_booleano ::= EQ {: RESULT = "=="; :}
         | NEQ {: RESULT = "!="; :}

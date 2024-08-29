@@ -1,0 +1,11 @@
+
+  0 ; a number !
+  1 ; b number !
+  ) 0 ; i number !!! i < 30 !!! i + 1 ; i !!! ( for ! }
+    a + b ; aux number !
+    b ; a !
+    aux ; b !
+  {
+  ) b ( printf !
+{
+main
