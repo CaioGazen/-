@@ -1,8 +1,8 @@
 # Notação BNF
 
-**bloco-fun%C3%A7%C3%A3o**
+**bloco-função**
 
-![bloco-fun%C3%A7%C3%A3o](diagram/bloco-fun%C3%A7%C3%A3o.png)
+![bloco-função](diagram/bloco-func.png)
 
 ```
 bloco-função
