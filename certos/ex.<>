@@ -1,8 +1,8 @@
 }
   ) "hello" "hhp" ( printf !!!!
   ) -1 > ) 2 - 3 ( ( iff !! }
-      ) dentro do if ( printf ?
-      9 ; var number ?
+      ) dentro do if ( printf !
+      9 ; var number !
       var + 1 ; var !
     {
 {
