@@ -63,9 +63,9 @@ comando_for ::= RP declaracao_de_variavel expressao_booleana final_linha atribui
         | RP expressao_booleana final_linha atribuicao_de_variavel LP FOR final_linha bloco_comandos {: System.out.println("Chamada da Função for detectada"); :}
         ;
 
-comando_while ::= RP  expressao_booleana LP WHILE final_linha bloco_comandos {: System.out.println("Chamada da Função while detectada"); :};
+comando_while ::= RP expressao_booleana LP WHILE final_linha bloco_comandos {: System.out.println("Chamada da Função while detectada"); :};
 
-declaracao_de_variavel ::=  expressao_aritmetica:a SEMI bloco_string:s tipo:t  final_linha {: System.out.println("Declaração da variavel: " + s +", com valor: " + a + " e tipo: "+ t); :}
+declaracao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s tipo:t final_linha {: System.out.println("Declaração da variavel: " + s +", com valor: " + a + " e tipo: "+ t); :}
         | bloco_string:s tipo:t  final_linha {: System.out.println("Declaração da variavel: " + s + " do tipo: "+ t); :}
         | bloco_string:s1 SEMI bloco_string:s2 tipo:t  final_linha {: System.out.println("Declaração da variavel: " + s1 + " do tipo: "+ t + " Recebe o valor de: " + s2); :}
         ;
