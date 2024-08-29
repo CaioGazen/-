@@ -1,57 +1,367 @@
 # Notação BNF
+**bloco-fun%C3%A7%C3%A3o:**
 
-
-
-```BNF
-<bloco função> ::= <bloco comandos> <string> | <bloco comandos> <inicio bloco> <args> <fim bloco> <string>
-
-<args> ::= <args> <declaracao de variavel>
-
-<bloco comandos> ::= <inicio bloco> <comandos> <fim bloco> 
-
-<comandos> ::= <comando> <comandos>| <comando> 
-
-<comando> ::= <coamndo printf> | <comando scanf> | <comando iff> | <comando for> | <comando while> | <declaracao de variavel> | <atribuicao de variavel>
-
-<comando printf> ::= ) <string> ( printf <final linha>
-
-<comando scanf> ::= ) ( scanf <final linha>
-
-<comando iff> ::= ) <expressao booleana> ( iff <final linha> <bloco comandos> | ) <expressao booleana> ( iff <final linha> <bloco comandos> else <final linha> <bloco comandos> 
-
-<comando for> ::= )<declaracao de variavel>  <expressao booleana>  <final linha>  <atribuicao de variavel> ( for <final linha> <bloco comandos> |  )<expressao booleana>  <final linha>  <atribuicao de variavel> ( for <final linha> <bloco comandos>
-
-<comando while> ::= ) <expressao booleana> ( while  <final linha> <bloco comandos>
-
-<declaracao de variavel> ::=  <expressao aritmetica> ; <string> <tipo> <final linha> | <string> <tipo> <final linha> | <string> ; <string> <tipo> <final linha>
-
-<atribuicao de variavel> ::= <expressao aritmetica>  ; <string>  <final linha> | <string> ; <string> <final linha> |  <comando scanf> ; <string> <final linha>
-
-<expressao aritmetica> ::= <expressao simples> | <expressao aritmetica> <operador aritmetico> <expressao aritmetica>
-
-<expressao simples> ::= <sinal> <numero> | <sinal> <string>
-
-<expressao booleana> ::= <expressao simples> | <expressao aritmetica> <operador relacional> <expressao aritmetica>
-
-<string> ::= <letra> | <string> <letra> | <string> <digito>
-
-<numero> ::= <digito> | <digito> <numero>
-
-<numero real> ::= <sinal> <numero>.<numero>
-
-<numero inteiro> ::= <sinal> <numero>
-
-
-<tipo> ::= number | number number | char | char char 
-<letra> ::= a | b | c | ... | z | A | B | C | ... | Z
-<operador relacional> ::= == | != | < | <= | >= | >
-<operador aritmetico> ::= + | - | * | / | %
-<digito> ::= 0 | 1 | ... | 9
-<sinal> ::= + | - | <null> 
-<final linha> ::= <eol> | <eold>
-<eol> ::= <eol> ! | ! <null>
-<eold> ::= <eold> ? | <null> ?
-<inicio bloco> ::= }
-<fim bloco> ::= {
+![bloco-fun%C3%A7%C3%A3o](diagram/bloco-fun%C3%A7%C3%A3o.png)
 
 ```
+bloco-função
+         ::= bloco-comandos ( '}' args '{' )? string
+```
+
+**args:**
+
+![args](diagram/args.png)
+
+```
+args     ::= args declaracao-de-variavel
+```
+
+referenced by:
+
+* args
+* bloco-função
+
+**bloco-comandos:**
+
+![bloco-comandos](diagram/bloco-comandos.png)
+
+```
+bloco-comandos
+         ::= '}' comando+ '{'
+```
+
+referenced by:
+
+* bloco-função
+* comando-for
+* comando-iff
+* comando-while
+
+**comando:**
+
+![comando](diagram/comando.png)
+
+```
+comando  ::= comando-printf
+           | comando-scanf
+           | comando-iff
+           | comando-for
+           | comando-while
+           | declaracao-de-variavel
+           | atribuicao-de-variavel
+```
+
+referenced by:
+
+* bloco-comandos
+
+**comando-printf:**
+
+![comando-printf](diagram/comando-printf.png)
+
+```
+comando-printf
+         ::= ')' string '(' printf final-linha
+```
+
+referenced by:
+
+* comando
+
+**comando-scanf:**
+
+![comando-scanf](diagram/comando-scanf.png)
+
+```
+comando-scanf
+         ::= ')' '(' scanf final-linha
+```
+
+referenced by:
+
+* atribuicao-de-variavel
+* comando
+
+**comando-iff:**
+
+![comando-iff](diagram/comando-iff.png)
+
+```
+comando-iff
+         ::= ')' expressao-booleana '(' iff final-linha bloco-comandos ( else final-linha bloco-comandos )?
+```
+
+referenced by:
+
+* comando
+
+**comando-for:**
+
+![comando-for](diagram/comando-for.png)
+
+```
+comando-for
+         ::= ')' declaracao-de-variavel? expressao-booleana final-linha atribuicao-de-variavel '(' for final-linha bloco-comandos
+```
+
+referenced by:
+
+* comando
+
+**comando-while:**
+
+![comando-while](diagram/comando-while.png)
+
+```
+comando-while
+         ::= ')' expressao-booleana '(' while final-linha bloco-comandos
+```
+
+referenced by:
+
+* comando
+
+**declaracao-de-variavel:**
+
+![declaracao-de-variavel](diagram/declaracao-de-variavel.png)
+
+```
+declaracao-de-variavel
+         ::= ( ( expressao-aritmetica | string ) ';' )? string tipo final-linha
+```
+
+referenced by:
+
+* args
+* comando
+* comando-for
+
+**atribuicao-de-variavel:**
+
+![atribuicao-de-variavel](diagram/atribuicao-de-variavel.png)
+
+```
+atribuicao-de-variavel
+         ::= ( expressao-aritmetica | string | comando-scanf ) ';' string final-linha
+```
+
+referenced by:
+
+* comando
+* comando-for
+
+**expressao-aritmetica:**
+
+![expressao-aritmetica](diagram/expressao-aritmetica.png)
+
+```
+expressao-aritmetica
+         ::= expressao-simples
+           | expressao-aritmetica operador-aritmetico expressao-aritmetica
+```
+
+referenced by:
+
+* atribuicao-de-variavel
+* declaracao-de-variavel
+* expressao-aritmetica
+* expressao-booleana
+
+**expressao-simples:**
+
+![expressao-simples](diagram/expressao-simples.png)
+
+```
+expressao-simples
+         ::= numero
+           | string
+```
+
+referenced by:
+
+* expressao-aritmetica
+* expressao-booleana
+
+**expressao-booleana:**
+
+![expressao-booleana](diagram/expressao-booleana.png)
+
+```
+expressao-booleana
+         ::= expressao-simples
+           | expressao-aritmetica operador-relacional expressao-aritmetica
+```
+
+referenced by:
+
+* comando-for
+* comando-iff
+* comando-while
+
+**string:**
+
+![string](diagram/string.png)
+
+```
+string   ::= letra ( letra | digito )*
+```
+
+referenced by:
+
+* atribuicao-de-variavel
+* bloco-função
+* comando-printf
+* declaracao-de-variavel
+* expressao-simples
+
+**numero:**
+
+![numero](diagram/numero.png)
+
+```
+numero   ::= digito ( numero numero )?
+```
+
+referenced by:
+
+* expressao-simples
+* inteiro
+* numero
+* real
+
+**real:**
+
+![real](diagram/real.png)
+
+```
+real     ::= sinal? numero . numero numero
+```
+
+**inteiro:**
+
+![inteiro](diagram/inteiro.png)
+
+```
+inteiro  ::= sinal? numero
+```
+
+**tipo:**
+
+![tipo](diagram/tipo.png)
+
+```
+tipo     ::= 'number'
+           | 'number number'
+           | 'char'
+           | 'char char'
+```
+
+referenced by:
+
+* declaracao-de-variavel
+
+**letra:**
+
+![letra](diagram/letra.png)
+
+```
+letra    ::= 'a'
+           | 'b'
+           | 'c'
+           | '...'
+           | 'z'
+           | 'A '
+           | 'B'
+           | 'C'
+           | 'Z'
+```
+
+referenced by:
+
+* string
+
+**operador-relacional:**
+
+![operador-relacional](diagram/operador-relacional.png)
+
+```
+operador-relacional
+         ::= '=='
+           | '!='
+           | '>'
+           | '>='
+           | '<='
+           | '<'
+```
+
+referenced by:
+
+* expressao-booleana
+
+**operador-aritmetico:**
+
+![operador-aritmetico](diagram/operador-aritmetico.png)
+
+```
+operador-aritmetico
+         ::= '+'
+           | '-'
+           | '*'
+           | '/'
+           | '%'
+```
+
+referenced by:
+
+* expressao-aritmetica
+
+**digito:**
+
+![digito](diagram/digito.png)
+
+```
+digito   ::= '0'
+           | '1'
+           | '...'
+           | '9'
+```
+
+referenced by:
+
+* numero
+* string
+
+**sinal:**
+
+![sinal](diagram/sinal.png)
+
+```
+sinal    ::= '+'
+           | '-'
+```
+
+referenced by:
+
+* inteiro
+* real
+
+**final-linha:**
+
+![final-linha](diagram/final-linha.png)
+
+```
+final-linha
+         ::= '!'+
+           | '?'+
+```
+
+referenced by:
+
+* atribuicao-de-variavel
+* comando-for
+* comando-iff
+* comando-printf
+* comando-scanf
+* comando-while
+* declaracao-de-variavel
+
