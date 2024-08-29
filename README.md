@@ -2,7 +2,8 @@
 
 
 
-
+```
+```bnf
 \<bloco função\> ::= \<bloco comandos\> \<string\> \r
 \<bloco comandos\> ::= \<inicio bloco\> \<comandos\> \<fim bloco\> \r
 \<inicio bloco\> ::= }
@@ -33,4 +34,5 @@
 \<final linha\> ::= \<eol\> | \<eold\>
 \<eol\> ::= \<eol\> ! | ! \<null\>
 \<eold\> ::= \<eold\> ? | \<null\> ?
-
+```
+```
