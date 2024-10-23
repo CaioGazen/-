@@ -1,23 +1,22 @@
 #!/bin/bash
-cd build/
-rm -rf *{.java, .class}
+cd build/ || exit
+rm -rf *{.java,.class,.cup,.jflex}
+
+echo ""
+echo "Copy files"
+echo ""
+
+cp ../src/* ./
 
 echo "Running jflex"
 echo ""
-java -jar ../libs/jflex-full-1.9.1.jar ../src/*.jflex
+java -jar ../libs/jflex-full-1.9.1.jar ./*.jflex
 
 echo ""
 echo "Running cup"
 echo ""
 
-java -jar ../libs/java-cup-11b.jar -parser Parser ../src/*.cup
-
-echo ""
-echo "Moving files"
-echo ""
-
-mv ../src/*.java .
-cp ../src/Main.java.src ./Main.java
+java -jar ../libs/java-cup-11b.jar -parser Parser ./*.cup
 
 echo ""
 echo "Building"

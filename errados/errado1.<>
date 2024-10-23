@@ -1,7 +1,9 @@
 }
   ) hello world ( printf !!!!
-  ) 1 > 2 ( if !!! }
-      9 ; variavel g numero
+  ) 1 > 2 ( iff !!! }
+      @ nove @ ; variavel char char !
+      9 ; aux number !
+      8.4 ; aux ! 
     {
 {
 main
