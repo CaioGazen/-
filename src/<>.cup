@@ -4,6 +4,7 @@ import java_cup.runtime.*;
 action code {:
   SemanticAnalyser analyser = new SemanticAnalyser();
   SymbolTable table = new SymbolTable();
+  CodeGen codegen = new CodeGen();
   String tipo = new String();
   boolean erro = false;
 :};
@@ -57,9 +58,9 @@ comando ::= comando_printf
         | atribuicao_de_variavel
         ;
 
-comando_printf ::= RP bloco_string:s LP PRNT final_linha {: System.out.println("Chamada da Função printf detectada com a string:\t\t"+ s); :};
+comando_printf ::= RP bloco_string:s LP PRNT final_linha {: System.out.println("Chamada da Função printf detectada com a string:\t\t"+ s); codegen.printf(s); :};
 
-comando_scanf ::= RP LP SCAN final_linha {: System.out.println("Chamada da Função scanf detectada"); :};
+comando_scanf ::= RP LP SCAN final_linha {: System.out.println("Chamada da Função scanf detectada");  :};
 
 
 comando_iff ::= RP expressao_booleana:b LP IFF final_linha bloco_comandos {: System.out.println("Chamada da Função iff detectada com expreessao: " + b); :}
@@ -79,7 +80,8 @@ declaracao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s tipo:t fin
 
                                 if(erro == false){
                                   table.inserirSimbolo(s, t);
-                                  
+                                  codegen.declaracaoVariavel(s, t);
+
                                 } else {
                                   System.out.println("erro: " + erro + " Erro de semantica na declaração da variavel: " + s);
                                 }
@@ -91,19 +93,20 @@ declaracao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s tipo:t fin
 
                                 if(erro == false){
                                   table.inserirSimbolo(s, t);
-                                  
+                                  codegen.declaracaoVariavel(s, t);
+                                
                                 } else {
                                   System.out.println("erro: " + erro + " Erro de semantica na declaração da variavel: " + s);
                                 }
                             :}
 
-        | bloco_string:s tipo:t  final_linha {: System.out.println("Declaração da variavel: " + s + " do tipo: "+ t); table.inserirSimbolo(s, t);  table.inserirSimbolo(s, t); :}
+        | bloco_string:s tipo:t  final_linha {: System.out.println("Declaração da variavel: " + s + " do tipo: "+ t); table.inserirSimbolo(s, t); codegen.declaracaoVariavel(s, t); :}
         | bloco_string:s2 SEMI bloco_string:s1 tipo:t  final_linha
                             {: System.out.println("Declaração da variavel: " + s1 + " do tipo: "+ t + " Recebe o valor de: " + s2); 
                                 erro = analyser.verificarTipos(t, table.getTipo(s2));
                                 if(erro == false){
                                   table.inserirSimbolo(s1, t);
-                                  
+                                  codegen.declaracaoVariavel(s1, t);
                                 } else {
                                   System.out.println("Erro de semantica na declaração da variavel: " + s1);
                                 }
@@ -132,7 +135,7 @@ atribuicao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s final_linh
                                 erro = analyser.verificarAtribuicao(s2, s1, table.getTipo(s2));
                             :}
         
-        | comando_scanf:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s2 +" Recebe o valor: " + s1); tipo = table.getTipo(s2); :}
+        | comando_scanf:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s2 +" Recebe o valor: " + s1); tipo = table.getTipo(s2); codegen.scanf(s2); :}
         | error                                                                                   {: System.out.println("Erro de sintaxe na atribuicao de variavel!"); :}
         ;
 
