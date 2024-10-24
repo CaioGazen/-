@@ -128,11 +128,18 @@ atribuicao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s final_linh
         | bloco_string:s1 SEMI bloco_string:s2 final_linha 
                             {:  System.out.println("A variavel "+ s2 +" Recebe o valor da variavel: " + s1); 
                                 erro = analyser.verificarTipos(table.getTipo(s1), table.getTipo(s2));
+                                if(erro == true){
+                                  System.out.println("Erro de semantica na atribuicao de variavel: " + s2);
+                                }
                             :}
 
         | ASP bloco_string:s1 ASP SEMI bloco_string:s2 final_linha 
                             {:  System.out.println("A variavel "+ s2 +" Recebe o valor da variavel: " + s1); 
                                 erro = analyser.verificarAtribuicao(s2, s1, table.getTipo(s2));
+                                if(erro == true){
+                                  System.out.println("Erro de semantica na atribuicao de variavel: " + s2);
+                                }
+
                             :}
         
         | comando_scanf:s1 SEMI bloco_string:s2 final_linha {: System.out.println("A variavel "+ s2 +" Recebe o valor: " + s1); tipo = table.getTipo(s2); codegen.scanf(s2); :}
