@@ -10,8 +10,7 @@ public class SemanticAnalyser {
     } else if (tipoIdentificador.equals("number") && !(valor.toString().matches("[0-9]+\\.0"))) {
       System.out.println("Erro: Variavel '" + identificador + "' eh do tipo number");
       error = true;
-    } else if ((tipoIdentificador.equals("number number") || tipoIdentificador.equals("number"))
-        && !(valor.toString().matches("[0-9]+\\.?[0-9]?"))) {
+    } else if (tipoIdentificador.equals("number number") && !(valor.toString().matches("[0-9]+\\.?[0-9]?"))) {
       System.out.println("Erro: Variavel '" + identificador + "' deve ter um valor numerico");
       error = true;
     } else if (tipoIdentificador.equals("char") && valor.toString().length() > 3) {
