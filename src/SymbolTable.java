@@ -5,11 +5,23 @@ public class SymbolTable {
 
   public String getTipo(Object identificador) {
     String id = new String();
-    if (tabela.get(identificador) == null) {
+    if (identificador.toString().equals("number") || identificador.toString().equals("char")
+        || identificador.toString().equals("number number")
+        || identificador.toString().equals("char char")) {
+      id = identificador.toString();
+    } else if (identificador.toString().matches("[0-9]+\\.0")) {
+      id = "number";
+
+    } else if (identificador.toString().matches("[0-9]+\\.?[0-9]?")) {
+      id = "number number";
+
+    } else if (tabela.get(identificador) == null) {
       System.out.println("Erro: identificador '" + identificador + "' nao existe.");
       id = "";
+
     } else {
       id = tabela.get(identificador).toString();
+
     }
     return id;
   }

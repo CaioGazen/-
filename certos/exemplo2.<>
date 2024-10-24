@@ -1,4 +1,5 @@
 }
+  zero number ?
   texto char char !
   ) 1 > 2 ( iff !!! }
      0 ; zero ?

@@ -119,7 +119,7 @@ declaracao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s tipo:t fin
 
 atribuicao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s final_linha
                             {:  System.out.println("A variavel "+ s +" Recebe o valor: " + a);
-                                  erro = analyser.verificarAtribuicao(s, a, table.getTipo(s));
+                                  erro = analyser.verificarTipos(table.getTipo(a), table.getTipo(s));
                                   if(erro == true){
                                     System.out.println("Erro de semantica na atribuicao de variavel: " + s);
                                   }
@@ -139,10 +139,10 @@ atribuicao_de_variavel ::= expressao_aritmetica:a SEMI bloco_string:s final_linh
         | error                                                                                   {: System.out.println("Erro de sintaxe na atribuicao de variavel!"); :}
         ;
 
-expressao_aritmetica ::= expressao_aritmetica:e1 operador_aritimetico:op expressao_aritmetica:e2    {: RESULT = e1 + " " + op + " " + e2; System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
-        | bloco_string:e1 operador_aritimetico:op expressao_aritmetica:e2                           {: RESULT = e1 + " " + op + " " + e2; System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
-        | bloco_string:e1 operador_aritimetico:op bloco_string:e2                                   {: RESULT = e1 + " " + op + " " + e2; System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
-        | expressao_aritmetica:e1 operador_aritimetico:op bloco_string:e2                           {: RESULT = e1 + " " + op + " " + e2; System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
+expressao_aritmetica ::= expressao_aritmetica:e1 operador_aritimetico:op expressao_aritmetica:e2    {: erro = analyser.verificarTipos(table.getTipo(e1), table.getTipo(e2)); if(erro == false){RESULT = table.getTipo(e1); } else {System.out.println("Tipos incompativeis"); } System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
+        | bloco_string:e1 operador_aritimetico:op expressao_aritmetica:e2                           {: erro = analyser.verificarTipos(table.getTipo(e1), table.getTipo(e2)); if(erro == false){RESULT = table.getTipo(e1); } else {System.out.println("Tipos incompativeis"); } System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
+        | bloco_string:e1 operador_aritimetico:op bloco_string:e2                                   {: erro = analyser.verificarTipos(table.getTipo(e1), table.getTipo(e2)); if(erro == false){RESULT = table.getTipo(e1); } else {System.out.println("Tipos incompativeis"); } System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
+        | expressao_aritmetica:e1 operador_aritimetico:op bloco_string:e2                           {: erro = analyser.verificarTipos(table.getTipo(e1), table.getTipo(e2)); if(erro == false){RESULT = table.getTipo(e1); } else {System.out.println("Tipos incompativeis"); } System.out.println("Espressao aritmetica detectada: ) " + e1 + " " + op + " " + e2 + " ( \t\tResultado: "+ RESULT); :}
 	      | RP expressao_aritmetica:e LP                                                              {: RESULT = ") " + e + " (";         System.out.println("Espressao aritmetica entre parenteses detectada: " + RESULT); :}
         | NUMBER:n                                                                                  {: RESULT = n; :}
 	      | error                                                                                     {: System.out.println("Erro de sintaxe na expressao aritmetica!"); :}
